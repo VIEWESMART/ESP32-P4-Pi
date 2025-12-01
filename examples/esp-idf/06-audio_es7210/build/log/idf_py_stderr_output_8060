@@ -1,0 +1,1 @@
+Command: cmake -G Ninja -DPYTHON_DEPS_CHECKED=1 -DPYTHON=d:\Espressif\vscode\python_env\idf5.5_py3.11_env\Scripts\python.exe -DESP_PLATFORM=1 -DSDKCONFIG='e:\Code File\esp-idf\examples\lichuang_esp32\04-audio_es7210\sdkconfig' -DCCACHE_ENABLE=1 E:\Code File\esp-idf\examples\lichuang_esp32\04-audio_es7210
