@@ -167,8 +167,8 @@ This tutorial aims to guide users to set up the software environment for ESP32-P
 
 ## Getting-start
 ### ESP-IDF
-  - Please go to [ESP-IDF Quick Start]() to see how to quickly set up the development environment and burn the application to your development board.
-  - The application examples for the development board are stored in Examples. You can configure the project options by entering idf.py menuconfig in the [examples]() directory.
+  - Please go to [ESP-IDF Quick Start](https://github.com/VIEWESMART/VIEWE-Tutorial/blob/main/esp-idf/esp-idf_Beginner_Tutorial.md) to see how to quickly set up the development environment and burn the application to your development board.
+  - The application examples for the development board are stored in Examples. You can configure the project options by entering idf.py menuconfig in the [examples](https://github.com/VIEWESMART/ESP32-P4-Pi/tree/main/examples/esp-idf) directory.
 ### Arduino IDE
 We are working hard to prepare. If you need anything, please contact us.
 
