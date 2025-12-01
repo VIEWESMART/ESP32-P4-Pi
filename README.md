@@ -39,7 +39,7 @@ The ESP32-P4-Pi-VIEWE development board is designed based on the VIEWE ESP32-P4-
 
 Security mechanisms: Secure Boot, Flash encryption, hardware encryption accelerator, and hardware random number generator. It also supports hardware access protection, enabling Access Permission Management (APM) and permission separation.
 
-### 3 Applications
+## 3 Applications
 With low power consumption, ESP32-P4 is an ideal choice for IoT devices in the following areas:
 
 •  Smart Home
@@ -67,3 +67,122 @@ With low power consumption, ESP32-P4 is an ideal choice for IoT devices in the f
 •  Edge Vision AI Processor
 
 •  HMI Control Pane
+
+## 4 Hardware Description
+### 4.1 Module Introduction
+
+<img width="1222" height="1326" alt="image" src="https://github.com/user-attachments/assets/ed934267-8ed3-45af-b259-e5fb03558008" />
+
+- 1、ESP32-P4-Module
+
+  - ESP32-P4-Core Built-in ESP32-P4NRW32、ESP32-C6、16MB Nor Flash、WIFI 6/Bluetooth 5
+
+- 2、RGB LED
+
+- 3、Ethernet port chip
+
+- 4、ES8311
+
+- 5、MIC1
+
+- 6、Speaker interface
+
+  - MX1.25 2P connector, supporting 8Ω2W speaker
+
+- 7、Type-A interface
+
+USB OTG 2.0 High Speed interface
+
+- 8、100 Mbps RJ45 Ethernet port
+
+- 9、PoE Module interface
+
+  - Supports external PoE module connection,use PoE supply power
+
+- 10、Display interface
+
+  - MIPI-2lane
+
+- 11、MIC2
+
+- 12、 Button
+
+  - Boot :Press when powering on or resetting to enter download mode
+  - Reset button：
+
+- 13、Type-C interface
+
+  - Can be used for power supply, program burning
+
+- 14、Type-C UART interface
+
+  - Can be used for power supply, program burning, and debugging
+
+- 15、CH340C
+
+- 16、ES7210
+
+- 17、TF card slot
+
+  - SDIO 3.0 interface protocol
+
+- 18、ESP32-C6 UART interface
+
+- 19、Power indicator light
+
+- 20、Camera interface
+
+  - MIPI 2-lane
+
+- 21、6-axis attitude sensor
+
+  - 3-axis accelerometer and 3-axis gyroscope sensor
+
+- 22、ESP32-C6 SMD ANT
+
+  - SDIO interface protocol, expanding Wi-Fi 6 and Bluetooth 5
+
+- 23、40PIN Pin header
+
+### 4.2 GPIO Definition
+<img width="718" height="1336" alt="image" src="https://github.com/user-attachments/assets/920ae583-4c90-4f28-8741-47dc9ce32146" />
+<img width="1114" height="140" alt="image" src="https://github.com/user-attachments/assets/d22dad71-6476-416a-8447-647ca443c886" />
+
+## 5 Functional Block Diagram
+The main components and connection methods of the ESP32-P4-Pi-VIEWE-Board are shown in the following figure:
+<img width="1085" height="745" alt="image" src="https://github.com/user-attachments/assets/a6587c61-f473-444c-b339-3c41ce2141a9" />
+
+## 6 Instructions for Use
+This tutorial aims to guide users to set up the software environment for ESP32-P4 hardware development, and demonstrates how to use the ESP-IDF configuration menu, compile, and download firmware to the ESP32-P4 development board through simple examples.
+
+- Preparation
+- Hardware
+  - ESP32-P4-Pi-VIEWE Development Board
+  - USB data cable (Type-A to Type-C, prepared as needed)
+  - Computer (Windows, Linux or macOS)
+- Software (It is recommended to install ESP-IDF using an integrated development environment. If you are familiar with ESP-IDF, you can start directly from the ESP-IDF terminal. You can choose any of the following development methods.)
+  - VSCode + ESP-IDF plugin (recommended)
+  - Eclipse + ESP-IDF plugin (Espressif-IDE)
+  - Arduino IDE
+
+## Getting-start
+### ESP-IDF
+  - Please go to [ESP-IDF Quick Start]() to see how to quickly set up the development environment and burn the application to your development board.
+  - The application examples for the development board are stored in Examples. You can configure the project options by entering idf.py menuconfig in the [examples]() directory.
+### Arduino IDE
+We are working hard to prepare. If you need anything, please contact us.
+
+# 7 Related Documents
+- [Camera Specification]()
+- [Display Specification]()
+- [ESP32-P4 Datasheet (Chinese)]()
+- [ESP32-P4 Datasheet (English)]()
+- [ESP32-P4 Technical Reference Manual (Chinese)]()
+- [ESP32-P4 Technical Reference Manual (English)]()
+- [ESP32-P4-Pi Datasheet]()
+- [ESP32-P4-Pi Schematic]()
+- [ESP32-P4-Core Schematic Diagram]()
+- [ESP32-P4-Core Datasheet]()
+
+### 8 Product Size
+<img width="1185" height="1636" alt="image" src="https://github.com/user-attachments/assets/ff88e188-5feb-4968-ad8c-fd90dc912c46" />
