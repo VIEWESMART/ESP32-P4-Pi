@@ -1,4 +1,6 @@
 # ESP32-P4-Pi
+[中文](/README_CN.md)
+
 <img width="757" height="1032" alt="ESP32-p4-pi" src="image/ESP32-p4-pi.png" />
 
 ## 1 Introduction
