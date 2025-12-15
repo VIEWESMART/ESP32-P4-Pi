@@ -183,7 +183,7 @@ We are working hard to prepare. If you need anything, please contact us.
 - [ESP32-C6 Datasheet (English)](Datasheet/P4-Core%20Datasheet/esp32-c6_datasheet_en.pdf)
 - [ESP32-P4 Technical Reference Manual (Chinese)](Datasheet/P4-Core%20Datasheet/Esp32-p4_technical_reference_manual_cn.pdf)
 - [ESP32-P4 Technical Reference Manual (English)](Datasheet/P4-Core%20Datasheet/Esp32-p4_technical_reference_manual_en.pdf)
-- [ESP32-P4-Pi Datasheet]()
+- [ESP32-P4-Pi Datasheet](Datasheet/ESP32-P4-Pi-VIEWE_SPEC_V1.1.pdf)
 - [ESP32-P4-Pi Schematic](Schematic/SCH_ESP32-ESP32-P4-Pi-VIEWE-V1.1_2025-10-23.pdf)
 - [ESP32-P4-Core Schematic Diagram](Schematic/SCH_ESP32-P4-Core_2025-11-24.pdf)
 - [ESP32-P4-Core Datasheet](Datasheet/P4-Core%20Datasheet/ESP32-P4-Core-VIEWE_SPEC_V1.0.pdf)
