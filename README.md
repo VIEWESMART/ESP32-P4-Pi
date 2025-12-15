@@ -1,5 +1,5 @@
 # ESP32-P4-Pi
-<img width="757" height="1032" alt="image" src="https://github.com/user-attachments/assets/5df0ecd5-3157-45d8-9433-5a48babc8171" />
+<img width="757" height="1032" alt="ESP32-p4-pi" src="image/ESP32-p4-pi.png" />
 
 ## 1 Introduction
 
@@ -71,7 +71,7 @@ With low power consumption, ESP32-P4 is an ideal choice for IoT devices in the f
 ## 4 Hardware Description
 ### 4.1 Module Introduction
 
-<img width="1222" height="1326" alt="image" src="https://github.com/user-attachments/assets/ed934267-8ed3-45af-b259-e5fb03558008" />
+<img width="1222" height="1326" alt="Module_definition" src="image/Module_definition.png" />
 
 - 1、ESP32-P4-Module
 
@@ -145,12 +145,11 @@ USB OTG 2.0 High Speed interface
 - 23、40PIN Pin header
 
 ### 4.2 GPIO Definition
-<img width="718" height="1336" alt="image" src="https://github.com/user-attachments/assets/920ae583-4c90-4f28-8741-47dc9ce32146" />
-<img width="1114" height="140" alt="image" src="https://github.com/user-attachments/assets/d22dad71-6476-416a-8447-647ca443c886" />
+<img width="718" height="1336" alt="image" src="image/pin_definition.png" />
 
 ## 5 Functional Block Diagram
 The main components and connection methods of the ESP32-P4-Pi-VIEWE-Board are shown in the following figure:
-<img width="1085" height="745" alt="image" src="https://github.com/user-attachments/assets/a6587c61-f473-444c-b339-3c41ce2141a9" />
+<img width="1085" height="745" alt="image" src="image/flowchart.png" />
 
 ## 6 Instructions for Use
 This tutorial aims to guide users to set up the software environment for ESP32-P4 hardware development, and demonstrates how to use the ESP-IDF configuration menu, compile, and download firmware to the ESP32-P4 development board through simple examples.
@@ -167,22 +166,38 @@ This tutorial aims to guide users to set up the software environment for ESP32-P
 
 ## Getting-start
 ### ESP-IDF
-  - Please go to [ESP-IDF Quick Start](https://github.com/VIEWESMART/VIEWE-Tutorial/blob/main/esp-idf/esp-idf_Beginner_Tutorial.md) to see how to quickly set up the development environment and burn the application to your development board.
-  - The application examples for the development board are stored in Examples. You can configure the project options by entering idf.py menuconfig in the [examples](https://github.com/VIEWESMART/ESP32-P4-Pi/tree/main/examples/esp-idf) directory.
+  - Novice please go to [ESP-IDF Quick Start](https://github.com/VIEWESMART/VIEWE-Tutorial/blob/main/esp-idf/esp-idf_Beginner_Tutorial.md) to see how to quickly set up the development environment and burn the application to your development board.
+  - The application examples for the development board are stored in Examples. You can configure the project options by entering idf.py menuconfig in the [examples](examples/esp-idf) directory.Examples will include usage instructions. If they are not included, we will add them as soon as possible. You can also contact us directly, and we will handle it as a priority.
+
 ### Arduino IDE
 We are working hard to prepare. If you need anything, please contact us.
 
 # 7 Related Documents
-- [Camera Specification]()
+- [Camera Specification](peripheral/camera_datasheet.pdf)
 - [Display Specification]()
-- [ESP32-P4 Datasheet (Chinese)]()
-- [ESP32-P4 Datasheet (English)]()
-- [ESP32-P4 Technical Reference Manual (Chinese)]()
-- [ESP32-P4 Technical Reference Manual (English)]()
+- [ESP32-P4 Datasheet (Chinese)](Datasheet/P4-Core%20Datasheet/esp32-p4-chip-revision-v1.3_datasheet_cn.pdf)
+- [ESP32-P4 Datasheet (English)](Datasheet/P4-Core%20Datasheet/esp32-p4-chip-revision-v1.3_datasheet_en.pdf)
+- [ESP32-C6 Datasheet (Chinese)](Datasheet/P4-Core%20Datasheet/esp32-c6_datasheet_cn.pdf)
+- [ESP32-C6 Datasheet (English)](Datasheet/P4-Core%20Datasheet/esp32-c6_datasheet_en.pdf)
+- [ESP32-P4 Technical Reference Manual (Chinese)](Datasheet/P4-Core%20Datasheet/Esp32-p4_technical_reference_manual_cn.pdf)
+- [ESP32-P4 Technical Reference Manual (English)](Datasheet/P4-Core%20Datasheet/Esp32-p4_technical_reference_manual_en.pdf)
 - [ESP32-P4-Pi Datasheet]()
-- [ESP32-P4-Pi Schematic]()
-- [ESP32-P4-Core Schematic Diagram]()
-- [ESP32-P4-Core Datasheet]()
+- [ESP32-P4-Pi Schematic](Schematic/SCH_ESP32-ESP32-P4-Pi-VIEWE-V1.1_2025-10-23.pdf)
+- [ESP32-P4-Core Schematic Diagram](Schematic/SCH_ESP32-P4-Core_2025-11-24.pdf)
+- [ESP32-P4-Core Datasheet](Datasheet/P4-Core%20Datasheet/ESP32-P4-Core-VIEWE_SPEC_V1.0.pdf)
+- [IMU](Datasheet/peripheral/QMI8658A.pdf)
 
 ### 8 Product Size
 <img width="1185" height="1636" alt="image" src="https://github.com/user-attachments/assets/ff88e188-5feb-4968-ad8c-fd90dc912c46" />
+
+## 8.Technical support
+
+Contact person: VIEWE-Ayang
+
+Email: smartrd1@viewedisplay.com
+
+QQ technical exchange group: 1014311090
+
+WeChat:
+![wechat](image/wechat.jpg)
+
