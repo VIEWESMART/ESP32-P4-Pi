@@ -139,7 +139,7 @@ ESP32-P4-Pi-VIEWE-Board的主要组件和连接方法如下图所示：
 - [ESP32-C6 数据手册 (英文)](Datasheet/P4-Core%20Datasheet/esp32-c6_datasheet_en.pdf)
 - [ESP32-P4 技术参考手册（中文）](Datasheet/P4-Core%20Datasheet/Esp32-p4_technical_reference_manual_cn.pdf)
 - [ESP32-P4 技术参考手册（英文）](Datasheet/P4-Core%20Datasheet/Esp32-p4_technical_reference_manual_en.pdf)
-- [ESP32-P4-Pi 数据手册]()
+- [ESP32-P4-Pi 数据手册](Datasheet/ESP32-P4-Pi-VIEWE_SPEC_V1.1.pdf)
 - [ESP32-P4-Pi 原理图](Schematic/SCH_ESP32-ESP32-P4-Pi-VIEWE-V1.1_2025-10-23.pdf)
 - [ESP32-P4-Core 原理图](Schematic/SCH_ESP32-P4-Core_2025-11-24.pdf)
 - [ESP32-P4-Core 数据手册](Datasheet/P4-Core%20Datasheet/ESP32-P4-Core-VIEWE_SPEC_V1.0.pdf)
