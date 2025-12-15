@@ -37,7 +37,7 @@ The ESP32-P4-Pi-VIEWE development board is designed based on the VIEWE ESP32-P4-
 
 •  2×20 pin headers led out on the board, providing access to 28 remaining programmable GPIOs.
 
-Security mechanisms: Secure Boot, Flash encryption, hardware encryption accelerator, and hardware random number generator. It also supports hardware access protection, enabling Access Permission Management (APM) and permission separation.
+
 
 ## 3 Applications
 With low power consumption, ESP32-P4 is an ideal choice for IoT devices in the following areas:
@@ -91,7 +91,7 @@ With low power consumption, ESP32-P4 is an ideal choice for IoT devices in the f
 
 - 7、Type-A interface
 
-USB OTG 2.0 High Speed interface
+  - USB OTG 2.0 High Speed interface
 
 - 8、100 Mbps RJ45 Ethernet port
 
@@ -108,7 +108,7 @@ USB OTG 2.0 High Speed interface
 - 12、 Button
 
   - Boot :Press when powering on or resetting to enter download mode
-  - Reset button：
+  - Reset button
 
 - 13、Type-C interface
 
@@ -172,7 +172,7 @@ This tutorial aims to guide users to set up the software environment for ESP32-P
 ### Arduino IDE
 We are working hard to prepare. If you need anything, please contact us.
 
-# 7 Related Documents
+## 7 Related Documents
 - [Camera Specification](peripheral/camera_datasheet.pdf)
 - [Display Specification]()
 - [ESP32-P4 Datasheet (Chinese)](Datasheet/P4-Core%20Datasheet/esp32-p4-chip-revision-v1.3_datasheet_cn.pdf)
@@ -187,7 +187,7 @@ We are working hard to prepare. If you need anything, please contact us.
 - [ESP32-P4-Core Datasheet](Datasheet/P4-Core%20Datasheet/ESP32-P4-Core-VIEWE_SPEC_V1.0.pdf)
 - [IMU](Datasheet/peripheral/QMI8658A.pdf)
 
-### 8 Product Size
+## 8 Product Size
 <img width="1185" height="1636" alt="image" src="https://github.com/user-attachments/assets/ff88e188-5feb-4968-ad8c-fd90dc912c46" />
 
 ## 8.Technical support
