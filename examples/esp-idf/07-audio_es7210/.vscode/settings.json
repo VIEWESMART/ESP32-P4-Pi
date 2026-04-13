@@ -12,5 +12,6 @@
     "--compile-commands-dir=e:\\Code File\\esp-idf\\examples\\lichuang_esp32\\04-audio_es7210\\build"
   ],
   "idf.portWin": "COM3",
-  "idf.flashType": "UART"
+  "idf.flashType": "UART",
+  "idf.currentSetup": "D:/Espressif/frameworks/esp-idf-v5.5.3/"
 }

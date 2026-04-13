@@ -3,5 +3,6 @@
     "idf.portWin": "COM3",
     "idf.flashType": "UART",
     "idf.espIdfPathWin": "d:\\Espressif\\vscode\\frameworks\\v5.5.1\\esp-idf",
-    "idf.toolsPathWin": "d:\\Espressif\\vscode"
+    "idf.toolsPathWin": "d:\\Espressif\\vscode",
+    "idf.currentSetup": "D:/Espressif/frameworks/esp-idf-v5.5.3/"
 }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 Espressif Systems (Shanghai) CO LTD
+ * SPDX-FileCopyrightText: 2024 Espressif Systems (Shanghai) CO LTD
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -25,19 +25,15 @@
 #include "unity_test_runner.h"
 #include "unity_test_utils_memory.h"
 #include "esp_lcd_mipi_dsi.h"
-#include "esp_lcd_ek79007.h"
+#include "esp_lcd_jd9165.h"
 
 #define TEST_LCD_H_RES                  (1024)
 #define TEST_LCD_V_RES                  (600)
 #define TEST_LCD_BIT_PER_PIXEL          (24)
-#define TEST_PIN_NUM_LCD_RST            (33)
+#define TEST_PIN_NUM_LCD_RST            (-1)
 #define TEST_PIN_NUM_BK_LIGHT           (-1)    // set to -1 if not used
 #define TEST_LCD_BK_LIGHT_ON_LEVEL      (1)
 #define TEST_LCD_BK_LIGHT_OFF_LEVEL     !TEST_LCD_BK_LIGHT_ON_LEVEL
-#define TEST_MIPI_DSI_LANE_NUM          (2)
-#define TEST_PIN_NUM_VER_FLIP           (-1)
-#define TEST_PIN_NUM_HOR_FLIP           (-1)
-#define TEST_LCD_ROTATE_LEVEL           (1)
 
 #if TEST_LCD_BIT_PER_PIXEL == 24
 #define TEST_MIPI_DPI_PX_FORMAT         (LCD_COLOR_PIXEL_FORMAT_RGB888)
@@ -52,7 +48,7 @@
 #define TEST_MIPI_DSI_PHY_PWR_LDO_CHAN          (3)
 #define TEST_MIPI_DSI_PHY_PWR_LDO_VOLTAGE_MV    (2500)
 
-static char *TAG = "ek79007_test";
+static char *TAG = "jd9165_test";
 static esp_ldo_channel_handle_t ldo_mipi_phy = NULL;
 static esp_lcd_panel_handle_t panel_handle = NULL;
 static esp_lcd_dsi_bus_handle_t mipi_dsi_bus = NULL;
@@ -68,6 +64,69 @@ IRAM_ATTR static bool test_notify_refresh_ready(esp_lcd_panel_handle_t panel, es
 
     return (need_yield == pdTRUE);
 }
+
+static const jd9165_lcd_init_cmd_t lcd_init_cmds[] = { 
+    //  {cmd, { data }, data_size, delay_ms}
+    {0x30, (uint8_t []){0x00}, 1, 0},
+    {0xF7, (uint8_t []){0x49, 0x61, 0x02, 0x00}, 4, 0},
+    {0x30, (uint8_t []){0x01}, 1, 0},
+    {0x04, (uint8_t []){0x0C}, 1, 0},
+    {0x05, (uint8_t []){0x08}, 1, 0},
+    {0x0B, (uint8_t []){0x11}, 1, 0}, //0x11(2lanes),0x12(3lanes),0x13(4lanes)
+    {0x20, (uint8_t []){0x04}, 1, 0}, //r_lansel_sel_reg  //A2 add
+    {0x1F, (uint8_t []){0x00}, 1, 0},  //mipi_hs_settle  //0x05->0x00 (P7_r01=04)
+    {0x23, (uint8_t []){0x38}, 1, 0},
+    {0x28, (uint8_t []){0x18}, 1, 0},
+    {0x29, (uint8_t []){0x29}, 1, 0},
+    {0x2A, (uint8_t []){0x01}, 1, 0},
+    {0x2B, (uint8_t []){0x29}, 1, 0},
+    {0x2C, (uint8_t []){0x01}, 1, 0},
+    {0x30, (uint8_t []){0x02}, 1, 0},
+    {0x00, (uint8_t []){0x05}, 1, 0},
+    {0x01, (uint8_t []){0x22}, 1, 0},
+    {0x02, (uint8_t []){0x08}, 1, 0},
+    {0x03, (uint8_t []){0x12}, 1, 0},
+    {0x04, (uint8_t []){0x16}, 1, 0},
+    {0x05, (uint8_t []){0x64}, 1, 0},
+    {0x06, (uint8_t []){0x00}, 1, 0},
+    {0x07, (uint8_t []){0x00}, 1, 0},
+    {0x08, (uint8_t []){0x78}, 1, 0},
+    {0x09, (uint8_t []){0x00}, 1, 0},
+    {0x0A, (uint8_t []){0x04}, 1, 0},
+    {0x0B, (uint8_t []){0x16,0x17,0x0B,0x0D,0x0D,0x0D,0x11,0x10,0x07,0x07,0x09}, 11, 0},
+    {0x0C, (uint8_t []){0x09,0x1E,0x1E,0x1C,0x1C,0x0D,0x0D,0x0D,0x0D,0x0D,0x0D}, 11, 0},
+    {0x0D, (uint8_t []){0x0A,0x05,0x0B,0x0D,0x0D,0x0D,0x11,0x10,0x06,0x06,0x08}, 11, 0},
+    {0x0E, (uint8_t []){0x08,0x1F,0x1F,0x1D,0x1D,0x0D,0x0D,0x0D,0x0D,0x0D,0x0D}, 11, 0},
+    {0x0F, (uint8_t []){0x0A,0x05,0x0D,0x0B,0x0D,0x0D,0x11,0x10,0x1D,0x1D,0x1F}, 11, 0},
+    {0x10, (uint8_t []){0x1F,0x08,0x08,0x06,0x06,0x0D,0x0D,0x0D,0x0D,0x0D,0x0D}, 11, 0},
+    {0x11, (uint8_t []){0x16,0x17,0x0D,0x0B,0x0D,0x0D,0x11,0x10,0x1C,0x1C,0x1E}, 11, 0},
+    {0x12, (uint8_t []){0x1E,0x09,0x09,0x07,0x07,0x0D,0x0D,0x0D,0x0D,0x0D,0x0D}, 11, 0},
+    {0x13, (uint8_t []){0x00,0x00,0x00,0x00}, 4, 0},
+    {0x14, (uint8_t []){0x00,0x00,0x41,0x41}, 4, 0},
+    {0x15, (uint8_t []){0x00,0x00,0x00,0x00}, 4, 0},
+    {0x17, (uint8_t []){0x00}, 1, 0},
+    {0x18, (uint8_t []){0x85}, 1, 0},
+    {0x19, (uint8_t []){0x06,0x09}, 2, 0},
+    {0x1A, (uint8_t []){0x05,0x08}, 2, 0},
+    {0x1B, (uint8_t []){0x0A,0x04}, 2, 0},
+    {0x26, (uint8_t []){0x00}, 1, 0},
+    {0x27, (uint8_t []){0x00}, 1, 0},
+    {0x30, (uint8_t []){0x06}, 1, 0},
+    {0x12, (uint8_t []){0x3F,0x26,0x27,0x35,0x2D,0x34,0x3F,0x3F,0x3F,0x35,0x2A,0x20,0x16,0x08}, 14, 0},
+    {0x13, (uint8_t []){0x3F,0x26,0x28,0x35,0x27,0x29,0x29,0x2F,0x35,0x2F,0x26,0x20,0x16,0x08}, 14, 0},
+    {0x30, (uint8_t []){0x0A}, 1, 0},
+    {0x02, (uint8_t []){0x4F}, 1, 0},
+    {0x0B, (uint8_t []){0x40}, 1, 0},
+    {0x30, (uint8_t []){0x0D}, 1, 0},
+    {0x0D, (uint8_t []){0x04}, 1, 0}, //mipi add  //0x0C, 0x04
+    {0x10, (uint8_t []){0x0C}, 1, 0},
+    {0x11, (uint8_t []){0x0C}, 1, 0},
+    {0x12, (uint8_t []){0x0C}, 1, 0},
+    {0x13, (uint8_t []){0x0C}, 1, 0},
+    {0x30, (uint8_t []){0x00}, 1, 0},
+    {0x11, (uint8_t []){0x00}, 0, 120},
+    {0x29, (uint8_t []){0x00}, 0, 20},
+};
 
 static void test_init_lcd(void)
 {
@@ -92,20 +151,21 @@ static void test_init_lcd(void)
 #endif
 
     ESP_LOGI(TAG, "Initialize MIPI DSI bus");
-    esp_lcd_dsi_bus_config_t bus_config = EK79007_PANEL_BUS_DSI_2CH_CONFIG();
+    esp_lcd_dsi_bus_config_t bus_config = JD9165_PANEL_BUS_DSI_2CH_CONFIG();
     TEST_ESP_OK(esp_lcd_new_dsi_bus(&bus_config, &mipi_dsi_bus));
 
     ESP_LOGI(TAG, "Install panel IO");
-    esp_lcd_dbi_io_config_t dbi_config = EK79007_PANEL_IO_DBI_CONFIG();
+    esp_lcd_dbi_io_config_t dbi_config = JD9165_PANEL_IO_DBI_CONFIG();
     TEST_ESP_OK(esp_lcd_new_panel_io_dbi(mipi_dsi_bus, &dbi_config, &mipi_dbi_io));
 
-    ESP_LOGI(TAG, "Install LCD driver of ek79007");
-    esp_lcd_dpi_panel_config_t dpi_config = EK79007_1024_600_PANEL_60HZ_CONFIG(TEST_MIPI_DPI_PX_FORMAT);
-    ek79007_vendor_config_t vendor_config = {
+    ESP_LOGI(TAG, "Install LCD driver of jd9165");
+    esp_lcd_dpi_panel_config_t dpi_config = JD9165_1024_600_PANEL_60HZ_DPI_CONFIG(TEST_MIPI_DPI_PX_FORMAT);
+    jd9165_vendor_config_t vendor_config = {
+        .init_cmds = lcd_init_cmds,
+        .init_cmds_size = sizeof(lcd_init_cmds) / sizeof(jd9165_lcd_init_cmd_t),
         .mipi_config = {
             .dsi_bus = mipi_dsi_bus,
             .dpi_config = &dpi_config,
-            .lane_num = TEST_MIPI_DSI_LANE_NUM,
         },
     };
     const esp_lcd_panel_dev_config_t panel_config = {
@@ -114,8 +174,7 @@ static void test_init_lcd(void)
         .bits_per_pixel = TEST_LCD_BIT_PER_PIXEL,
         .vendor_config = &vendor_config,
     };
-    TEST_ESP_OK(esp_lcd_new_panel_ek79007(mipi_dbi_io, &panel_config, &panel_handle));
-    TEST_ESP_OK(esp_lcd_panel_reset(panel_handle));
+    TEST_ESP_OK(esp_lcd_new_panel_jd9165(mipi_dbi_io, &panel_config, &panel_handle));
     TEST_ESP_OK(esp_lcd_panel_init(panel_handle));
 
     refresh_finish = xSemaphoreCreateBinary();
@@ -179,7 +238,7 @@ static void test_draw_color_bar(esp_lcd_panel_handle_t panel_handle, uint16_t h_
     free(color);
 }
 
-TEST_CASE("test ek79007 to draw pattern with MIPI interface", "[ek79007][draw_pattern]")
+TEST_CASE("test jd9165 to draw pattern with MIPI interface", "[jd9165][draw_pattern]")
 {
     ESP_LOGI(TAG, "Initialize LCD device");
     test_init_lcd();
@@ -195,7 +254,7 @@ TEST_CASE("test ek79007 to draw pattern with MIPI interface", "[ek79007][draw_pa
     test_deinit_lcd();
 }
 
-TEST_CASE("test ek79007 to draw color bar with MIPI interface", "[ek79007][draw_color_bar]")
+TEST_CASE("test jd9165 to draw color bar with MIPI interface", "[jd9165][draw_color_bar]")
 {
     ESP_LOGI(TAG, "Initialize LCD device");
     test_init_lcd();
@@ -208,33 +267,22 @@ TEST_CASE("test ek79007 to draw color bar with MIPI interface", "[ek79007][draw_
     test_deinit_lcd();
 }
 
-TEST_CASE("test ek79007 to rotate with MIPI interface", "[ek79007][rotate]")
+TEST_CASE("test jd9165 to rotate with MIPI interface", "[jd9165][rotate]")
 {
-#if TEST_PIN_NUM_VER_FLIP >= 0 && TEST_PIN_NUM_HOR_FLIP >= 0
-    ESP_LOGI(TAG, "Horizontal and Vertical pin configurations");
-
-    gpio_config_t rota_gpio_config = {
-        .mode = GPIO_MODE_OUTPUT,
-        .pin_bit_mask = ((1ULL << TEST_PIN_NUM_HOR_FLIP) | (1ULL << TEST_PIN_NUM_VER_FLIP)),
-    };
-    TEST_ESP_OK(gpio_config(&rota_gpio_config));
-
     ESP_LOGI(TAG, "Initialize LCD device");
     test_init_lcd();
 
-    ESP_LOGI(TAG, "Rotate the screen");
-    TEST_ESP_OK(gpio_set_level(TEST_PIN_NUM_VER_FLIP, !TEST_LCD_ROTATE_LEVEL));
-    TEST_ESP_OK(gpio_set_level(TEST_PIN_NUM_HOR_FLIP, TEST_LCD_ROTATE_LEVEL));
+    ESP_LOGI(TAG, "Mirror the screen");
+    for (size_t i = 0; i < 4; i++) {
+        TEST_ASSERT_NOT_EQUAL(esp_lcd_panel_mirror(panel_handle, i & 2, i & 1), ESP_FAIL);
 
-    ESP_LOGI(TAG, "Show color bar drawn by software");
-    test_draw_color_bar(panel_handle, TEST_LCD_H_RES, TEST_LCD_V_RES);
-    vTaskDelay(pdMS_TO_TICKS(TEST_DELAY_TIME_MS));
+        ESP_LOGI(TAG, "Mirror: %d", i);
+        test_draw_color_bar(panel_handle, TEST_LCD_H_RES, TEST_LCD_V_RES);
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
 
     ESP_LOGI(TAG, "Deinitialize LCD device");
     test_deinit_lcd();
-#else
-    ESP_LOGW(TAG, "Horizontal or Vertical flip pin not configured");
-#endif
 }
 
 // Some resources are lazy allocated in the LCD driver, the threadhold is left for that case
@@ -260,20 +308,19 @@ void tearDown(void)
 void app_main(void)
 {
     /**
-    *  _____ _  _______ ___   ___   ___ _____
-    * | ____| |/ /___  / _ \ / _ \ / _ \___  |
-    * |  _| | ' /   / / (_) | | | | | | | / /
-    * | |___| . \  / / \__, | |_| | |_| |/ /
-    * |_____|_|\_\/_/    /_/ \___/ \___//_/
+    *      _ ____   ___  _  __  ____
+    *     | |  _ \ / _ \/ |/ /_| ___|
+    *  _  | | | | | (_) | | '_ \___ \
+    * | |_| | |_| |\__, | | (_) |__) |
+    *  \___/|____/   /_/|_|\___/____/
     */
-    printf("  _____ _  _______ ___   ___   ___ _____\r\n");
-    printf(" | ____| |/ /___  / _ \\ / _ \\ / _ \\___  |\r\n");
-    printf(" |  _| | ' /   / / (_) | | | | | | | / / \r\n");
-    printf(" | |___| . \\  / / \\__, | |_| | |_| |/ /\r\n");
-    printf(" |_____|_|\\_\\/_/    /_/ \\___/ \\___//_/   \r\n");
+    printf("      _ ____   ___  _  __  ____  \r\n");
+    printf("     | |  _ \\ / _ \\/ |/ /_| ___| \r\n");
+    printf("  _  | | | | | (_) | | '_ \\___ \\ \r\n");
+    printf(" | |_| | |_| |\\__, | | (_) |__) |\r\n");
+    printf(" \\___/|____/   /_/|_|\\___/____/ \r\n");
     // unity_run_menu();
 
-    ESP_LOGI(TAG, "Initialize LCD device");
     test_init_lcd();
 
     ESP_LOGI(TAG, "Show color bar pattern drawn by hardware");

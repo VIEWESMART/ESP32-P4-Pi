@@ -12,5 +12,6 @@
     "--compile-commands-dir=e:\\Code File\\esp-idf\\examples\\lichuang_esp32\\05-audio_es8311\\build"
   ],
   "idf.flashType": "UART",
-  "idf.portWin": "COM3"
+  "idf.portWin": "COM3",
+  "idf.currentSetup": "D:/Espressif/frameworks/esp-idf-v5.5.3/"
 }

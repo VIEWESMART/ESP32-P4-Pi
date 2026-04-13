@@ -8,6 +8,8 @@
 
 #include "sdkconfig.h"
 
+#define VIEWE_JD9165_7 1
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -23,6 +25,16 @@ extern "C" {
 #define EXAMPLE_MIPI_DSI_IMAGE_VFP                16
 #elif CONFIG_EXAMPLE_LCD_PATTERN_EK79007
 // Refresh Rate = 48000000/(10+120+120+1024)/(1+20+10+600) = 60Hz
+/*JD9165*/
+#if VIEWE_JD9165_7
+#define EXAMPLE_MIPI_DSI_DPI_CLK_MHZ              50
+#define EXAMPLE_MIPI_DSI_IMAGE_HSYNC              20
+#define EXAMPLE_MIPI_DSI_IMAGE_HBP                136
+#define EXAMPLE_MIPI_DSI_IMAGE_HFP                160
+#define EXAMPLE_MIPI_DSI_IMAGE_VSYNC              2
+#define EXAMPLE_MIPI_DSI_IMAGE_VBP                12
+#define EXAMPLE_MIPI_DSI_IMAGE_VFP                20
+#else
 #define EXAMPLE_MIPI_DSI_DPI_CLK_MHZ              48
 #define EXAMPLE_MIPI_DSI_IMAGE_HSYNC              10
 #define EXAMPLE_MIPI_DSI_IMAGE_HBP                120
@@ -30,6 +42,7 @@ extern "C" {
 #define EXAMPLE_MIPI_DSI_IMAGE_VSYNC              1
 #define EXAMPLE_MIPI_DSI_IMAGE_VBP                20
 #define EXAMPLE_MIPI_DSI_IMAGE_VFP                10
+#endif
 #endif
 
 #ifdef __cplusplus

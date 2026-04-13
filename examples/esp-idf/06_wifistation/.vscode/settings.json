@@ -1,13 +1,14 @@
 {
-  "idf.espIdfPathWin": "D:/Espressif/frameworks/esp-idf-v5.3.2/",
-  "idf.toolsPathWin": "D:\\Espressif\\tools",
-  "idf.pythonInstallPath": "d:\\Espressif\\tools\\tools\\idf-python\\3.11.2\\python.exe",
+  "idf.espIdfPathWin": "d:\\Espressif\\vscode\\frameworks\\v5.5.1\\esp-idf",
+  "idf.toolsPathWin": "d:\\Espressif\\vscode",
+  "idf.pythonInstallPath": "d:\\Espressif\\vscode\\tools\\idf-python\\3.11.2\\python.exe",
   "idf.openOcdConfigs": [
     "board/esp32p4-builtin.cfg"
   ],
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32p4"
   },
-  "idf.portWin": "COM4",
-  "idf.flashType": "UART"
+  "idf.portWin": "COM3",
+  "idf.flashType": "UART",
+  "idf.currentSetup": "D:/Espressif/frameworks/esp-idf-v5.5.3/"
 }

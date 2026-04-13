@@ -14,6 +14,9 @@
 #include "format_wav.h"
 #include "sdmmc_cmd.h"
 #include "driver/sdmmc_host.h"
+#include "sd_pwr_ctrl_by_on_chip_ldo.h"
+#include "driver/gpio.h"
+#include "esp_err.h"
 
 /* I2C port and GPIOs */
 #define EXAMPLE_I2C_NUM            (0)
@@ -26,6 +29,7 @@
 #define EXAMPLE_I2S_BCK_IO         (12)
 #define EXAMPLE_I2S_WS_IO          (10)
 #define EXAMPLE_I2S_DI_IO          (9)
+// #define EXAMPLE_I2S_DO_IO          (48) //test
 
 /* SD card GPIOs */
 #define EXAMPLE_SD_CMD_IO      (44) 
@@ -57,6 +61,8 @@
 
 static const char *TAG = "example";
 
+
+sd_pwr_ctrl_handle_t pwr_ctrl_handle = NULL;
 
 static i2s_chan_handle_t es7210_i2s_init(void)
 {
@@ -95,14 +101,15 @@ sdmmc_card_t * mount_sdcard(void)
     ESP_LOGI(TAG, "Mounting SD card");
     esp_vfs_fat_sdmmc_mount_config_t mount_config = {
         .format_if_mount_failed = true,
-        .max_files = 2,
-        .allocation_unit_size = 8 * 1024
+        .max_files = 5,
+        .allocation_unit_size = 16 * 1024
     };
 
     ESP_LOGI(TAG, "Initializing SD card");
     ESP_LOGI(TAG, "Using SDMMC peripheral");
 
     sdmmc_host_t sdmmc_host = SDMMC_HOST_DEFAULT(); // SDMMC主机接口配置
+    sdmmc_host.pwr_ctrl_handle = pwr_ctrl_handle;
     sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT(); // SDMMC插槽配置
     slot_config.width = 4;  // 改为4线SD模式
     slot_config.clk = EXAMPLE_SD_CLK_IO; 
@@ -220,20 +227,45 @@ err:
 
 void app_main(void)
 {
+    esp_err_t ret;
+
     /* 初始化I2S接口 */
-    i2s_chan_handle_t i2s_rx_chan = es7210_i2s_init();  
+    i2s_chan_handle_t i2s_rx_chan = es7210_i2s_init();
+    
+    sd_pwr_ctrl_ldo_config_t ldo_config = {
+        .ldo_chan_id = 4,
+    };
+
+    ret = sd_pwr_ctrl_new_on_chip_ldo(&ldo_config, &pwr_ctrl_handle);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to create a new on-chip LDO power control driver");
+        return;
+    }
+
     /* 初始化es7210芯片 */
     es7210_codec_init();
     /* 挂载SD卡 */
     sdmmc_card_t *sdmmc_card = mount_sdcard();
     /* 录音 */
-    esp_err_t err = record_wav(i2s_rx_chan);
+    ret = record_wav(i2s_rx_chan);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "录音失败");
+    } else {
+        ESP_LOGI(TAG, "录音完成");
+    }
+
     /* 弹出SD卡 */
-    esp_vfs_fat_sdcard_unmount(EXAMPLE_SD_MOUNT_POINT, sdmmc_card);
-    if(err == ESP_OK) {
+    ret = esp_vfs_fat_sdcard_unmount(EXAMPLE_SD_MOUNT_POINT, sdmmc_card);
+    if(ret == ESP_OK) {
         ESP_LOGI(TAG, "Audio was successfully recorded into "EXAMPLE_RECORD_FILE_PATH
                       ". You can now remove the SD card safely");
     } else {
         ESP_LOGE(TAG, "Record failed, "EXAMPLE_RECORD_FILE_PATH" on SD card may not be playable.");
+    }
+
+    ret = sd_pwr_ctrl_del_on_chip_ldo(pwr_ctrl_handle);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to delete the on-chip LDO power control driver");
+        return;
     }
 }
