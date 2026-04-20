@@ -168,22 +168,33 @@ This tutorial aims to guide users to set up the software environment for ESP32-P
 
 ## 7 Software
 
-We provide comprehensive support for **Arduino**, **PlatformIO**, and **ESP-IDF** frameworks, with pre-ported **LVGL** examples.
+We provide a complete set of sample code based on **ESP-IDF**.
 
 ### 7.1 Software Examples
 Examples are available in the [GitHub Repository](examples).
 
-| Framework | Example Path | Description |
-| :--- | :--- | :--- |
-| **Arduino** | `examples/arduino/gui/lvgl_v8` | **LVGL Benchmark**: Usage example of lvgl v8. It can also be directly opened in the Arduino IDE. |
-| **esp-idf** | `examples/esp_idf/lvgl_v9_port` | **lvgl port**: Example of porting and using lvgl in esp-idf |
-| **PlatformIO**| `examples/platformio/lvgl_v8_port` | **lvgl v8 port**: Usage example of lvgl v8. |
+There are **13 runnable esp-idf examples** provided in the [`https://github.com/VIEWESMART/ESP32-P4-Pi/tree/main/examples/esp-idf`](https://github.com/VIEWESMART/ESP32-P4-Pi/tree/main/examples/esp-idf) directory.
+
+| # | Example Name | Description | Key Tech / Features |
+| :-: | :--- | :--- | :--- |
+| **01** | [**HowToCreateProject**](https://github.com/VIEWESMART/ESP32-P4-SmartDisplay/tree/main/examples/esp-idf/01_HowToCreateProject) | **engineering template** | A Guide to Minimal CMake Setup. |
+| **02** | [**HelloWorld**](https://github.com/VIEWESMART/ESP32-P4-SmartDisplay/tree/main/examples/esp-idf/02_HelloWorld) | **Sanity Check** | Basic UART log output. |
+| **03** | [**attitude**](https://github.com/VIEWESMART/ESP32-P4-Pi/tree/main/examples/esp-idf/03-attitude) | **Attitude sensor** | Collect sensor data and print it |
+| **04** | [**i2c_tools**](https://github.com/VIEWESMART/ESP32-P4-SmartDisplay/tree/main/examples/esp-idf/03_i2c_tools) | **Bus Scanner** | Detect Touch (GT911) & Audio addresses. |
+| **05** | [**sdmmc**](https://github.com/VIEWESMART/ESP32-P4-SmartDisplay/tree/main/examples/esp-idf/06_sdmmc) | **SD Card** | Read/Write files using SDMMC Host. |
+| **06** | [**wifistation**](https://github.com/VIEWESMART/ESP32-P4-SmartDisplay/tree/main/examples/esp-idf/07_wifistation) | **Wi-Fi 6** | Network via ESP32-C6 (SDIO). |
+| **07** | [**audio_es7210**](https://github.com/VIEWESMART/ESP32-P4-Pi/tree/main/examples/esp-idf/07-audio_es7210)| **ES7210 Audio Acquisition** | Collect audio through a microphone and store it on an SD card (recording) |
+| **08** | [**audio_es8311**](https://github.com/VIEWESMART/ESP32-P4-Pi/tree/main/examples/esp-idf/08-audio_es8311)| **ES8311 Audio Playback** | Drive the audio codec chip to play audio |
+| **09** | [**ethernetbasic**](https://github.com/VIEWESMART/ESP32-P4-Pi/tree/main/examples/esp-idf/09_ethernetbasic)| **Ethernet** | Connect to the network by plugging in a network cable |
+| **10** | [**color_panel_jd9165**](https://github.com/VIEWESMART/ESP32-P4-Pi/tree/main/examples/esp-idf/10_color_panel_jd9165) | **LCD test** | Simple RGB screen refresh test. |
+| **11** | [**mipi_lcd_camera**](https://github.com/VIEWESMART/ESP32-P4-Pi/tree/main/examples/esp-idf/11_mipi_lcd_camera) | **Camera preview** | MIPI-CSI input -> MIPI-DSI output. |
+| **12** | [**7inch_lvgl_demo_v9**](https://github.com/VIEWESMART/ESP32-P4-Pi/tree/main/examples/esp-idf/12_7inch_lvgl_demo_v9) | **Factory UI** | **LVGL 9** Benchmark and Touch Demonstration. |
+| **13** | [**esp_brookesia_phone**](https://github.com/VIEWESMART/ESP32-P4-Pi/tree/main/examples/esp-idf/13_esp_brookesia_phone) | **Comprehensive demonstration** | Similar to mobile system examples. |
 
 > [!NOTE]
 > **Arduino**: Not supported temporarily, but we will provide corresponding steps and launch the update as soon as possible.
 > 
 > **PlatformIO**: Not supported temporarily, but we will provide corresponding steps and launch the update as soon as possible.
-
 
 
 ### 7.2 Getting Started
@@ -210,6 +221,10 @@ Examples are available in the [GitHub Repository](examples).
     * Click `upload` in the upper right corner to download.
 
 #### 7.2.3 Arduino Setup ([Novice tutorial](https://github.com/VIEWESMART/VIEWE-Tutorial/blob/main/Arduino%20Tutorial/Arduino%20Getting%20Started%20Tutorial.md))
+
+> [!NOTE]
+>**This step is pre-written**: The sample is being uploaded and will be available after official upload
+
 1.  **Install[Arduino](https://www.arduino.cc/en/software)**
     - Choose installation based on your system type.
     - Newcomers please refer to the [beginner's tutorial](https://github.com/VIEWESMART/VIEWE-Tutorial/blob/main/Arduino%20Tutorial/Arduino%20Getting%20Started%20Tutorial.md).
@@ -291,6 +306,10 @@ Examples are available in the [GitHub Repository](examples).
 > You cannot enable multiple esp supported panel boards at the same time.
 
 #### 7.2.4 PlatformIO Setup
+
+> [!NOTE]
+>**This step is pre-written**: The sample is being uploaded and will be available after official upload
+
 1.  **Open platformio example**
     * go to GitHub to download the program. You can download the main branch by clicking on the "<> Code" with green text
     * Open the example using VS Code(PlatformIO)
